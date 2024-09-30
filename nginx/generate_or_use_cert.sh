@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ ! -f "/etc/nginx/ssl/nginx.key" ] || [ ! -f "/etc/nginx/ssl/nginx.crt" ]; then
+if [ ! -f "/etc/nginx/ssl/privkey.pem" ] || [ ! -f "/etc/nginx/ssl/cert.pem" ]; then
     echo "Generating self-signed certificates"
     mkdir -p /etc/nginx/ssl
     openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
