@@ -4,7 +4,7 @@ if [ ! -f "/etc/nginx/ssl/cert.pem" ] || [ ! -f "/etc/nginx/ssl/privkey.pem" ]; 
     echo "Generating self-signed certificates"
     mkdir -p /etc/nginx/ssl
     openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-        -keyout /etc/nginx/ssl/cert.pem -out /etc/nginx/ssl/privkey.pem \
+        -keyout /etc/nginx/ssl/privkey.pem -out /etc/nginx/ssl/cert.pem \
         -subj "/C=US/ST=State/L=City/O=Organization/CN=purpleops"
 else
     echo "Nginx SSL certificates already exist"
