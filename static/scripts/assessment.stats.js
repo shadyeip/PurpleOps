@@ -1,12 +1,31 @@
 // Template pie chart styles
 var pieChartOptions = {
 	chart: {
-		width: 380,
-		type: 'pie',
+			width: 390,
+			type: 'pie',
 	},
 	title: {
-		text: '',
-		align: 'left'
+			text: '',
+			align: 'left'
+	},
+	colors:['#519bf7', '#34a853', '#fbbc05', '#ea4335'],
+	dataLabels: {
+			enabled: true,
+			style: {
+					fontWeight: 'bold'
+			},
+			background: {
+					enabled: true,
+					foreColor: '#000',
+					borderColor: '#000',
+					borderWidth: 0.5,
+					dropShadow: {
+							enabled: false,
+					},
+			},
+			dropShadow: {
+					enabled: false,
+			},
 	}
 };
 
@@ -14,124 +33,133 @@ var pieChartOptions = {
 var barChartOptions = {
 	series: [],
 	chart: {
-		type: 'bar',
-		height: 370 	// Originally 350
+			type: 'bar',
+			height: 370     // Originally 350
 	},
+	colors:['#519bf7', '#34a853', '#fbbc05', '#ea4335', '#673ab7'],
 	plotOptions: {
-		bar: {
-			horizontal: false,
-			columnWidth: '55%',
-			endingShape: 'rounded'
-		},
+			bar: {
+					horizontal: false,
+					columnWidth: '55%',
+					endingShape: 'rounded'
+			},
 	},
 	dataLabels: {
-		enabled: false
+			enabled: false
 	},
 	stroke: {
-		show: true,
-		width: 2,
-		colors: ['transparent']
+			show: true,
+			width: 2,
+			colors: ['transparent']
 	},
 	xaxis: {
-		categories: [],
-		labels: {
-                show: true,
-                rotate: -45,
-                rotateAlways: true,
-                trim: false,
-        },
-    },
+			categories: [],
+			labels: {
+			show: true,
+			rotate: -45,
+			rotateAlways: true,
+			trim: false,
+	},
+},
 	yaxis: {
-		title: {
-			text: 'Count'
-		},
-		tickAmount: 2 	// Originally 1
+			title: {
+					text: 'Count'
+			},
+			tickAmount: 2   // Originally 1
 	},
 	fill: {
-		opacity: 1
+			opacity: 1
 	},
 	title: {
-		text: '',
-		align: 'left'
+			text: '',
+			align: 'left'
 	},
 };
 
 // Custom bar chart styles for individual Tactics results
 var barChartOptionsCustom = {
 	series: [{
-		name: 'Results',
-		data: []
+			name: 'Results',
+			data: []
 	}],
 	chart: {
-		type: 'bar',
-		height: 370 	// Originally 350
+			type: 'bar',
+			height: 370     // Originally 350
 	},
+	colors:['#519bf7', '#34a853', '#fbbc05', '#ea4335'],
 	plotOptions: {
-		bar: {
-			horizontal: false,
-			columnWidth: '55%',
-			endingShape: 'rounded'
-		},
+			bar: {
+					horizontal: false,
+					columnWidth: '55%',
+					endingShape: 'rounded',
+					dataLabels: {
+							position: 'top',
+					},
+			},
 	},
 	dataLabels: {
-		enabled: true 	// Originally false
+			enabled: true,  // Originally false
+			offsetY: -20,
+			style: {
+					colors: ['#000000']
+			},
 	},
 	stroke: {
-		show: true,
-		width: 2,
-		colors: ['transparent']
+			show: true,
+			width: 2,
+			colors: ['transparent']
 	},
 	xaxis: {
-		type: 'category',
-		categories: ["Prevented","Alerted","Logged","Missed"],
-		labels: {
-                	show: false,
-                	rotate: -45,
-                	rotateAlways: true,
-                	trim: false,
-        	},
-    	},
+			type: 'category',
+			categories: ["Prevented","Alerted","Logged","Missed"],
+			labels: {
+					show: false,
+					rotate: -45,
+					rotateAlways: true,
+					trim: false,
+			},
+	},
 	yaxis: {
-		show: true,
-		title: {
-			text: 'Count',
-			rotate: -90,
-		},
-		labels: {
 			show: true,
-			rotate: 0,
-		},
-		tickAmount: 2 	// Originally 1
+			title: {
+					text: 'Count',
+					rotate: -90,
+			},
+			labels: {
+					show: true,
+					rotate: 0,
+			},
+			tickAmount: 2   // Originally 1
 	},
 	fill: {
-		opacity: 1
+			opacity: 1
 	},
 	title: {
-		text: '',
-		align: 'left'
+			text: '',
+			align: 'left'
 	},
 };
 
 // Template boxplot styling
 var boxChartOptions = {
 	series: [
-		{
-			type: 'boxPlot',
-			data: Object.keys(tacticStats).map((i) => {
-				return {
-					x: i,
-					y: boxPlotVals(tacticStats[i]["scoresPrevent"])
-				}
-			})
-		}
+			{
+					type: 'boxPlot',
+					data: Object.keys(tacticStats).map((i) => {
+							return {
+									x: i,
+									y: boxPlotVals(tacticStats[i]["scoresPrevent"])
+							}
+					})
+			}
 	],
 	chart: {
-		type: 'boxPlot',
-		height: 350
+			type: 'boxPlot',
+			height: 350
 	},
 	title: {
-		text: 'Prevention and Detection Scores per Tactic',
-		align: 'left'
+			text: 'Prevention and Detection Scores per Tactic',
+			align: 'left'
 	}
 };
 
@@ -141,10 +169,10 @@ function getPercentile(data, percentile) {
 	var index = (percentile / 100) * data.length;
 	var result;
 	if (Math.floor(index) == index) {
-		result = (data[(index - 1)] + data[index]) / 2;
+			result = (data[(index - 1)] + data[index]) / 2;
 	}
 	else {
-		result = data[Math.floor(index)];
+			result = data[Math.floor(index)];
 	}
 	return result;
 }
@@ -153,11 +181,11 @@ function numSort(a, b) {
 }
 function boxPlotVals(data) {
 	return [
-		Math.min.apply(Math, data),
-		getPercentile(data, 25),
-		getPercentile(data, 50),
-		getPercentile(data, 75),
-		Math.max.apply(Math, data)
+			Math.min.apply(Math, data),
+			getPercentile(data, 25),
+			getPercentile(data, 50),
+			getPercentile(data, 75),
+			Math.max.apply(Math, data)
 	]
 }
 
@@ -179,10 +207,10 @@ var results = JSON.parse(JSON.stringify(barChartOptions));
 results.title.text = "Outcome per Tactic"
 results.series = ["Prevented", "Alerted", "Logged", "Missed"].map((t) => {
 	return {
-		name: t,
-		data: Object.keys(tacticStats).filter((i) => i !== "All").map((i) => {
-			return tacticStats[i][t]
-		})
+			name: t,
+			data: Object.keys(tacticStats).filter((i) => i !== "All").map((i) => {
+					return tacticStats[i][t]
+			})
 	}
 })
 results.xaxis.categories = Object.keys(tacticStats).filter((i) => i !== "All");
@@ -195,10 +223,10 @@ var alerts = JSON.parse(JSON.stringify(barChartOptions));
 alerts.title.text = "Alert Severities per Tactic"
 alerts.series = ["Informational", "Low", "Medium", "High", "Critical"].map((t) => {
 	return {
-		name: t,
-		data: Object.keys(tacticStats).filter((i) => i !== "All").map((i) => {
-			return tacticStats[i][t]
-		})
+			name: t,
+			data: Object.keys(tacticStats).filter((i) => i !== "All").map((i) => {
+					return tacticStats[i][t]
+			})
 	}
 })
 alerts.xaxis.categories = Object.keys(tacticStats).filter((i) => i !== "All");
@@ -211,10 +239,10 @@ var priorities = JSON.parse(JSON.stringify(barChartOptions));
 priorities.title.text = "Priority Action and Priority per Tactic"
 priorities.series = ["Prevent", "Detect", "Low", "Medium", "High"].map((t) => {
 	return {
-		name: t,
-		data: Object.keys(tacticStats).filter((i) => i !== "All").map((i) => {
-			return tacticStats[i]["priorityType"].concat(tacticStats[i]["priorityUrgency"]).filter(x => x === t).length
-		})
+			name: t,
+			data: Object.keys(tacticStats).filter((i) => i !== "All").map((i) => {
+					return tacticStats[i]["priorityType"].concat(tacticStats[i]["priorityUrgency"]).filter(x => x === t).length
+			})
 	}
 })
 priorities.xaxis.categories = Object.keys(tacticStats).filter((i) => i !== "All");
@@ -228,10 +256,10 @@ controls.title.text = "Controls per Tactic"
 controlKeys = [...new Set(tacticStats["All"]["controls"])]
 controls.series = controlKeys.map((t) => {
 	return {
-		name: t,
-		data: Object.keys(tacticStats).filter((i) => i !== "All").map((i) => {
-			return tacticStats[i]["controls"].filter(x => x === t).length
-		})
+			name: t,
+			data: Object.keys(tacticStats).filter((i) => i !== "All").map((i) => {
+					return tacticStats[i]["controls"].filter(x => x === t).length
+			})
 	}
 })
 controls.xaxis.categories = Object.keys(tacticStats).filter((i) => i !== "All");
@@ -245,50 +273,50 @@ chart.render();
 
 
 function isObjectNotEmpty(obj) {
-    if (obj === undefined) {
-        return false; // If object is undefined, return false
-    }
-    for (var key in obj) {
-        if (obj.hasOwnProperty(key) && obj[key] !== 0) {
-            return true; // If any non-zero value is found, return true
-        }
-    }
-    return false; // If all values are zero or undefined, return false
+if (obj === undefined) {
+	return false; // If object is undefined, return false
+}
+for (var key in obj) {
+	if (obj.hasOwnProperty(key) && obj[key] !== 0) {
+		return true; // If any non-zero value is found, return true
+	}
+}
+return false; // If all values are zero or undefined, return false
 }
 
 var noDataOptions = {
-    text: 'There is no data available for this Tactic',
-    align: 'center',
-    verticalAlign: 'middle',
-    offsetX: 0,
-    offsetY: 0,
-    style: {
-        fontSize: '14px',
-    }
+text: 'There is no data available for this Tactic',
+align: 'center',
+verticalAlign: 'middle',
+offsetX: 0,
+offsetY: 0,
+style: {
+	fontSize: '14px',
+}
 };
 
 function renderTacticChart(name, filteredTacticStats, chartContainerId) {
-    var results = JSON.parse(JSON.stringify(barChartOptionsCustom));
-    results.title.text = name + " Results";
-    if (isObjectNotEmpty(filteredTacticStats)) {
-            // Loop over each element and set each value from filteredTacticStats
-            results.series = ["Prevented", "Alerted", "Logged", "Missed"].map((t) => {
-                return {
-                    name: t,
-                    data: [filteredTacticStats[t]] // Put the count of each outcome into an array
-                };
-            });
-            results.xaxis.categories = [name];
-            var chart = new ApexCharts(document.querySelector(chartContainerId), results);
-            chart.render();
-    } else {
-            console.warn(`No data available for rendering the '${name}' chart.`);
-            var chart = new ApexCharts(document.querySelector(chartContainerId), {
-		...results,
-		noData: noDataOptions
-	    });
-            chart.render();
-    }
+var results = JSON.parse(JSON.stringify(barChartOptionsCustom));
+results.title.text = name + " Results";
+if (isObjectNotEmpty(filteredTacticStats)) {
+		// Loop over each element and set each value from filteredTacticStats
+		results.series = ["Prevented", "Alerted", "Logged", "Missed"].map((t) => {
+			return {
+				name: t,
+				data: [filteredTacticStats[t]] // Put the count of each outcome into an array
+			};
+		});
+		results.xaxis.categories = [name];
+		var chart = new ApexCharts(document.querySelector(chartContainerId), results);
+		chart.render();
+} else {
+		console.warn(`No data available for rendering the '${name}' chart.`);
+		var chart = new ApexCharts(document.querySelector(chartContainerId), {
+			...results,
+			noData: noDataOptions
+		});
+		chart.render();
+}
 }
 
 // Render individual chart results of each Tactic - Outputs "No data available" if chart is empty
