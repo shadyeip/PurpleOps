@@ -46,8 +46,11 @@ If a custom SSL certificate is not provided, the installation will genererate se
 
 ### Prereqs
 
+These steps will install required dependencies like certbot, docker and docker compose.
+
 Tested on:
 - Debian 12
+- Kali 2024.3
 
 1. Elevate to root:
 
@@ -58,34 +61,30 @@ Tested on:
 2. Install depenendencies. It's best to run these commands one by one:
 
   ```bash
-  # Tested on Debian 12
   # installs certbot and other dependencies
   apt update
   apt-get install certbot net-tools apt-transport-https ca-certificates curl software-properties-common git -y
+  ```
 
-  # install docker
-  # download the script
-  curl -fsSL https://get.docker.com -o install-docker.sh
+3. Install Docker/Docker Compose
 
-  # 2. verify the script's content
-  cat install-docker.sh
-
-  # 3. run the script with --dry-run to verify the steps it executes
-  sh install-docker.sh --dry-run
-
-  # 4. run the script either as root, or using sudo to perform the installation.
-  sudo sh install-docker.sh
+  ```bash
+  git clone https://github.com/shadyeip/PurpleOps ~/PurpleOps
+  cd setup/
+  sudo bash get-docker.sh
+  cd ~/PurpleOps
   ```
 
 ### Installation with Self-Signed Certificates
 
 ```bash
-# Tested on Debian 12
+# Tested on Debian 12 and Kali 2024.3
+
 # Clone this repository
-git clone https://github.com/shadyeip/PurpleOps
+git clone https://github.com/shadyeip/PurpleOps ~/PurpleOps
 
 # Go into the repository
-cd PurpleOps
+cd ~/PurpleOps
 
 # Run the app with docker (add `-d` to run in background)
 sudo docker compose up -d
