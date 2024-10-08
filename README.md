@@ -16,7 +16,6 @@
 <p align="center">
   <a href="#key-features">Key Features</a> •
   <a href="#installation">Installation</a> •
-  <a href="#contact-us">Contact Us</a> •
   <a href="#credits">Credit</a> •
   <a href="#license">License</a>
 </p>
@@ -31,6 +30,7 @@
 * Framework friendly
 * Role-based Access Control & MFA
 * Inbuilt DOCX reporting + custom template support
+* Simple and secure installation steps - New feature in fork!
 
 How PurpleOps is different:
 
@@ -40,88 +40,64 @@ How PurpleOps is different:
 
 ## Installation
 
-### Default
+This leverages Docker and an nginx reverse proxy to install and host PurpleOps. 
+
+If a custom SSL certificate is not provided, the installation will genererate self-signed certificates.
+
+### Prereqs
+
+Tested on:
+- Debian 12
+
+1. Elevate to root:
+
+  ```bash
+  sudo su -
+  ```
+
+2. Install depenendencies. It's best to run these commands one by one:
+
+  ```bash
+  # Tested on Debian 12
+  # installs certbot and other dependencies
+  apt update
+  apt-get install certbot net-tools apt-transport-https ca-certificates curl software-properties-common git -y
+
+  # install docker
+  # download the script
+  curl -fsSL https://get.docker.com -o install-docker.sh
+
+  # 2. verify the script's content
+  cat install-docker.sh
+
+  # 3. run the script with --dry-run to verify the steps it executes
+  sh install-docker.sh --dry-run
+
+  # 4. run the script either as root, or using sudo to perform the installation.
+  sudo sh install-docker.sh
+  ```
+
+### Installation with Self-Signed Certificates
 
 ```bash
+# Tested on Debian 12
 # Clone this repository
-$ git clone https://github.com/CyberCX-STA/PurpleOps
+git clone https://github.com/shadyeip/PurpleOps
 
 # Go into the repository
-$ cd PurpleOps
-
-# Alter PurpleOps settings (if you want to customize anything but should work out the box)
-$ nano .env
+cd PurpleOps
 
 # Run the app with docker (add `-d` to run in background)
-$ sudo docker compose up
+sudo docker compose up -d
 
-# PurpleOps should now by available on http://localhost:5000, it is recommended to add a reverse proxy such as nginx or Apache in front of it if you want to expose this to the outside world.
+# PurpleOps should now by available on https://localhost. 443 is exposed so should be accessible via direct IP.
 ```
 
-<details>
-  <summary><h3>Kali</h3></summary>
-  
-  ```bash
-  # Install docker-compose
-  sudo apt install docker-compose -y
-  
-  # Clone this repository
-  $ git clone https://github.com/CyberCX-STA/PurpleOps
-  
-  # Go into the repository
-  $ cd PurpleOps
-  
-  # Alter PurpleOps settings (if you want to customize anything but should work out the box)
-  $ nano .env
-  
-  # Run the app with docker (add `-d` to run in background)
-  $ sudo docker-compose up
-  
-  # PurpleOps should now by available on http://localhost:5000, it is recommended to add a reverse proxy such as nginx or Apache in front of it if you want to expose this to the outside world.
-  ```
-</details>
+### Installation with LetsEncrypt Certificates
 
-<details>
-  <summary><h3>Manual</h3></summary>
-  
-  ```bash
-  # Alternatively
-  $ sudo docker run --name mongodb -d -p 27017:27017 mongo
-  $ pip3 install -r requirements.txt
-  $ python3 seeder.py
-  $ python3 purpleops.py
-  ```
-</details>
+TODO
 
-<details>
-  <summary><h3>NGINX Reverse Proxy + Certbot</h3></summary>
-
-  Replace 2x `purpleops.example.com` with your FQDN and ensure your box is open internet-wide on 80/443.
-  
-  ```bash
-  sudo apt install nginx certbot python3-certbot-nginx -y
-  sudo nano /etc/nginx/sites-available/purpleops # Paste below file
-  sudo ln -s /etc/nginx/sites-available/purpleops /etc/nginx/sites-enabled/
-  sudo certbot --nginx -d purpleops.example.com
-  sudo service nginx restart
-  ```
-
-  ```
-  server {
-    listen 80;
-    server_name purpleops.example.com;
-
-    location / {
-        proxy_pass http://localhost:5000;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-    }
-  }
-  ```
-</details>
-
-<details>
-  <summary><h3>IP Whitelisting with ufw</h3></summary>
+### IP Whitelisting with ufw
   
   ```bash
   sudo apt install ufw -y
@@ -131,14 +107,10 @@ $ sudo docker compose up
   sudo ufw insert 1 allow from 100.100.100.100/24 to any port 443
   sudo ufw enable
   ```
-</details>
-
-## Contact Us
-
-We would love to hear back from you, if something is broken or have and idea to make it better add a ticket or connect to us on the [PurpleOps Discord](https://discord.gg/2xeA6FB3GJ) or email us at pops@purpleops.app | `@_w_m__` 
 
 ## Credits
 
+- Credit to original PurpleOps developers. This is their project. See fork parent.
 - Atomic Red Team [(LICENSE)](https://github.com/redcanaryco/atomic-red-team/blob/master/LICENSE.txt) for sample commands
 - [CyberCX](https://cybercx.com.au/) for foundational support
 
